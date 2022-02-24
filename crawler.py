@@ -11,7 +11,7 @@ def get_chapter_name(chapter_text):
 
 def cleanhtml(raw_html):
     cleantext = BeautifulSoup(raw_html, "lxml").text
-    cleantext = cleantext.encode('ascii', 'ignore').decode()
+    cleantext = cleantext.encode('ascii', 'ignore').decode().strip()
     return cleantext
 
 
