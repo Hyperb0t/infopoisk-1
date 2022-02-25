@@ -21,8 +21,9 @@ if __name__ == '__main__':
     tokens = set((map(lambda x: x.lower(), tokens)))
     stop_words = set(stopwords.words('english'))
     tokens = [w for w in tokens if not w in stop_words]
-    stop_char_list = '0123456789./'
+    stop_char_list = '0123456789./%'
     tokens = [ele for ele in tokens if all(ch not in ele for ch in stop_char_list)]
+    tokens = [w for w in tokens if not (w.startswith('-') or w.endswith('-'))]
     with open('tokens.txt', 'w') as f:
         for t in tokens:
             f.write("%s\n" % t)
