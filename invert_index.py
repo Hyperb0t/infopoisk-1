@@ -10,7 +10,7 @@ def filter_tokens(tokens_list):
     tokens_list = set((map(lambda x: x.lower(), tokens_list)))
     stop_words = set(stopwords.words('english'))
     tokens_list = [w for w in tokens_list if not w in stop_words]
-    stop_char_list = '0123456789./%*+=: '
+    stop_char_list = '0123456789./%*+=:!&?$()'
     tokens_list = [ele for ele in tokens_list if all(ch not in ele for ch in stop_char_list)]
     tokens_list = [w for w in tokens_list if not (w.startswith('-') or w.endswith('-'))]
     return tokens_list
