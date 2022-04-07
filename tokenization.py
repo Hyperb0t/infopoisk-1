@@ -5,6 +5,15 @@ from nltk.corpus import stopwords
 import nltk
 from nltk.stem import WordNetLemmatizer
 
+def filter_tokens(tokens_list):
+    tokens_list = set((map(lambda x: x.lower(), tokens_list)))
+    stop_words = set(stopwords.words('english'))
+    tokens_list = [w for w in tokens_list if not w in stop_words]
+    stop_char_list = '0123456789./%*+=:'
+    tokens_list = [ele for ele in tokens_list if all(ch not in ele for ch in stop_char_list)]
+    tokens_list = [w for w in tokens_list if not (w.startswith('-') or w.endswith('-'))]
+    return tokens_list
+
 if __name__ == '__main__':
     nltk.download('punkt')
     nltk.download('stopwords')
@@ -17,13 +26,16 @@ if __name__ == '__main__':
             file_tokens = set(word_tokenize(text))
             # print(file_tokens)
             tokens.update(file_tokens)
+    #
+    # tokens = set((map(lambda x: x.lower(), tokens)))
+    # stop_words = set(stopwords.words('english'))
+    # tokens = [w for w in tokens if not w in stop_words]
+    # stop_char_list = '0123456789./%'
+    # tokens = [ele for ele in tokens if all(ch not in ele for ch in stop_char_list)]
+    # tokens = [w for w in tokens if not (w.startswith('-') or w.endswith('-'))]
 
-    tokens = set((map(lambda x: x.lower(), tokens)))
-    stop_words = set(stopwords.words('english'))
-    tokens = [w for w in tokens if not w in stop_words]
-    stop_char_list = '0123456789./%'
-    tokens = [ele for ele in tokens if all(ch not in ele for ch in stop_char_list)]
-    tokens = [w for w in tokens if not (w.startswith('-') or w.endswith('-'))]
+    tokens = filter_tokens(tokens)
+
     with open('tokens.txt', 'w') as f:
         for t in tokens:
             f.write("%s\n" % t)
