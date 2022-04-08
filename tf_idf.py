@@ -24,8 +24,6 @@ def idf(word_occur_doc_count, docs_count):
     return abs(math.log(docs_count / word_occur_doc_count))
 
 if __name__ == '__main__':
-    tokens = set()
-    inv_index = {}
     lemmatizer = WordNetLemmatizer()
     doc_count = len(os.listdir('pages'))
     token_occur_doc_count = {}
@@ -64,9 +62,9 @@ if __name__ == '__main__':
                 for token in file_tokens:
                     token_tf = tf(token, repeated_tokens)
                     token_idf = idf(token_occur_doc_count[token], doc_count)
-                    f.write('{}, {}, {}\n'.format(token, token_tf, token_tf * token_idf))
+                    f.write('{} {} {}\n'.format(token, token_tf, token_tf * token_idf))
             with open('tf-idf-lemmas/' + file, 'w') as f:
                 for lemma in file_lemmas:
                     lemma_tf = tf(lemma, repeated_lemmas)
                     lemma_idf = idf(lemma_occur_doc_count[lemma], doc_count)
-                    f.write('{}, {}, {}\n'.format(lemma, lemma_tf, lemma_tf * lemma_idf))
+                    f.write('{} {} {}\n'.format(lemma, lemma_tf, lemma_tf * lemma_idf))

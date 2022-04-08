@@ -1,0 +1,32 @@
+<!Doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+
+<body>
+<form class="form-inline justify-content-center my-4" action="/search" method="get">
+    <div class="col-lg-5 col-md-8 col-sm-10 d-flex justify-content-around">
+        <input type="text" class="form-control col-10" placeholder="Type something" name="q" value="{{query}}">
+        <button class="btn btn-primary mx-1" type="submit">Search</button>
+    </div>
+</form>
+<p class="text-center">{{query_tfidf}}</p>
+{% if results|length == 0 %}
+<h3 class="text-center">Nothing found...(</h3>
+{% else %}
+{% for n in results %}
+<div class="search-result my-4 col-lg-8 col-md-8 col-sm-10 mx-auto d-flex bg-light border flex-lg-row flex-column
+                justify-content-center">
+    <div class="text-column col-lg-10 col-md-10 col-sm-10 my-auto mx-auto">
+        <a href="/open/{{n['filename']}}" class="h3 link-primary">{{n['filename']}}</a>
+        <p>{{n['text']|safe}}</p>
+    </div>
+    <div class="col-lg-1 col-md-10 col-sm-10 d-flex justify-content-center mx-auto">
+        <p>{{n['cos_sim']}}</p>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+</body>
